@@ -1,4 +1,5 @@
 MID-SEASON CHECK-IN
+
 For the mid-season progress check-in, please provide a short write-up that details 1) progress you made so far and 2) a timeline for open tasks that remain to be solved until submission. The mid-season progress check-in will not be included in the final evaluation.
 
 # 0) Intro to the progress
@@ -49,17 +50,17 @@ _____________________________________________________
 
 1. Smart contract for Sui netowork. To verify both of the circuits "commit.circom" and "unlock.circom". Implement the incentives scheme: take collateral, burn it if not proceeded from the commit stage to unlock stage in time.
 Reward for matching answers. 
-(April 21)
+(April 8)
 
 2. A library to use the compiled circuits and communicate the results to the smart-contract on-chain.
-(April 21)
+(April 10)
 
 3. Smart contract deployment script. Add sample questions for the demo.
-(April 21)
+(April 12)
 
 4. Write up the proof. Explain correlation counting in a square diagram. Show how pairing billinear or multi-linear would give an ability to bruteforce the answer in no time! 
 (Just for fun show how a "bad" hashing to curve will lead to point corelation and information leakage.)
-(April 21)
+(April 15)
 
 5. Prepare a good presentation. Include the algorithm block-scheme and its proof. Illustrate a multidue of use cases: The captcha for the web3, Smart whitelisting and mint for NFTs, student-professor quizes, and porting any puzzle game to the blockchain.
 Include a live demo or a video. 
