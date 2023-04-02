@@ -30,6 +30,8 @@ template Example () {
     signal input address, a, P_x, P_y;
     signal output hash_a, aP_x, aP_y;
     
+    address * 0 === 0;
+
     // Check that a is not zero i.e it actually has an inverse
     signal a_inv;
     a_inv <-- a!=0 ? 1/a : 0;
@@ -75,3 +77,4 @@ component main { public [ address ] } = Example();
 
 //Do a sefety check that key is not zero
 //Or not same meaning
+

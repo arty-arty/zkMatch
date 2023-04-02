@@ -30,6 +30,8 @@ template Example () {
     signal input address, k, P_x, P_y, hash_k, kP_x, kP_y, aH_x, aH_y;
     signal output kaH_x, kaH_y;
     
+    address * 0 === 0;
+    
     // Check all points are on curve
     component check_P = BabyCheck();
     check_P.x <== P_x;
