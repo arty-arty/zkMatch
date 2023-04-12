@@ -9,8 +9,7 @@ Surprisingly,this works well as a homework quiz, as a way to port any puzzle gam
 # The algorithm shortly
 
 A point on an elliptic curve denotes the right answer. If a human and captcha server, using groth16, prove
-that they did a Diffie-Hellman key exchange, and they arrived at the same point, then the an-
-swer is right. 
+that they did a Diffie-Hellman key exchange, and they arrived at the same point, then the answer is right. 
 
 # When it works 
 
