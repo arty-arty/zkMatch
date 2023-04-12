@@ -17,7 +17,7 @@ The proof relies on DDH - Decisional Diffie-Hellman assumption. It holds for ell
 
 # Why non-trivial
 
-The difficulty was that it involes two parties, say, student and professor. So it is a multi-party computation protocol. The professor holds a secret - the true answer. The hardest thing, this answer belongs to a very small set. Might be just three options for a multiple choice test.\
+The difficulty was that it involes two parties, say, student and professor. So it is a multi-party computation protocol. The professor holds a secret - the true answer. The hardest thing, this answer belongs to a very small set. Might be just three options for a multiple choice test.
 
 So, trusting the true answer, even hashed to a smart contract is insecure. (Salting the hash is not an option.
 It works, but anyway means that the salt is a secret stored by another party) 
