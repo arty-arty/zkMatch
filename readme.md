@@ -1,9 +1,3 @@
-MID-SEASON CHECK-IN
-
-For the mid-season progress check-in, please provide a short write-up that details 1) progress you made so far and 2) a timeline for open tasks that remain to be solved until submission. The mid-season progress check-in will not be included in the final evaluation.
-
-# 0) Intro to the progress
-
 Imagine a quiz where even the professor does not know student's answer. They know only 1 bit, if the answer was right or wrong.
 A world where students will not feel embarrassed by wrong test answers. And professors feel safe, because answers do not leak. 
 Interestingly, such system seems to generalize well to other problems like
