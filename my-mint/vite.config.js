@@ -19,6 +19,9 @@ export default defineConfig({
       'js-sha3': path.join(__dirname, 'node_modules/js-sha3'),
     },
   },
+  build: {
+    minify: false
+  },
   // build: {
   //   rollupOptions: {
   //     external: [
