@@ -1,8 +1,8 @@
 // Here I implemented a simple "try and increment" method of hashing to elliptic curve from 
 // Dan Boneh, Ben Lynn, and Hovav Shacham. Short signatures from the weil pairing. J. Cryptology, 17(4):297–319, 2004
 
-const { ZqField, Scalar } = require("ffjavascript");
-shake128 = require('js-sha3').shake128;
+import { ZqField, Scalar } from "ffjavascript";
+import { shake128 } from 'js-sha3';
 
 // This is our BabyJubJub Finite Field prime modulus
 const r = Scalar.fromString("21888242871839275222246405745257275088548364400416034343698204186575808495617");
@@ -70,7 +70,7 @@ function montgomery_to_twisted_edwards(u, v) {
 // const { xx, yy } = clear_cofactor({ x, y })
 // console.log({ xx, yy })
 
-function string_to_curve(s) {
+export function string_to_curve(s) {
     const { u, v } = try_and_increment(F, s);
     const { x, y } = montgomery_to_twisted_edwards(u, v);
 
@@ -81,4 +81,4 @@ function string_to_curve(s) {
     return { xx, yy }
 }
 
-module.exports = { string_to_curve, try_and_increment, montgomery_to_twisted_edwards }
+//module.exports = { string_to_curve, try_and_increment, montgomery_to_twisted_edwards }
