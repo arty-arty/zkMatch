@@ -12,7 +12,14 @@ const questId = readFileSync('../client-scripts/quest.id', 'utf8').trim();
 export default defineConfig({
 
   plugins: [react(), wasm(), nodePolyfills()],
-
+  build: {
+    rollupOptions: {
+      external: [
+        "js-sha3",
+        "ffjavascript",
+      ],
+    },
+  },
   // optimizeDeps: {
   //   include: ['./src/snarkjs.js'],
   // },
