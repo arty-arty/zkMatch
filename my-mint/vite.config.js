@@ -17,7 +17,7 @@ export default defineConfig({
   //   include: ['./src/snarkjs.js'],
   // },
   define: {
-    process: { browser: true },
+    // process: { browser: true },
     'process.env.packageId': JSON.stringify(packageId),
     'process.env.questId': JSON.stringify(questId),
   },
