@@ -7,19 +7,26 @@ import nodePolyfills from 'vite-plugin-node-stdlib-browser'
 
 const packageId = readFileSync('../client-scripts/package.id', 'utf8').trim();
 const questId = readFileSync('../client-scripts/quest.id', 'utf8').trim();
+import path from 'path';
 
 // https://vitejs.dev/config/
 export default defineConfig({
 
   plugins: [react(), wasm(), nodePolyfills()],
-  build: {
-    rollupOptions: {
-      external: [
-        "js-sha3",
-        "ffjavascript",
-      ],
+  resolve: {
+    alias: {
+      'ffjavascript': path.join(__dirname, 'node_modules/ffjavascript'),
+      'js-sha3': path.join(__dirname, 'node_modules/js-sha3'),
     },
   },
+  // build: {
+  //   rollupOptions: {
+  //     external: [
+  //       "js-sha3",
+  //       "ffjavascript",
+  //     ],
+  //   },
+  // },
   // optimizeDeps: {
   //   include: ['./src/snarkjs.js'],
   // },

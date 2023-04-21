@@ -7,8 +7,10 @@ import { ConnectButton, useWalletKit } from "@mysten/wallet-kit";
 import { formatAddress } from "@mysten/sui.js";
 //import { groth16 } from "snarkjs";
 
-import { string_to_curve } from "../../boneh-encode/hash_to_curve.mjs";
 import { ZqField, Scalar } from "ffjavascript";
+import { shake128 } from 'js-sha3';
+
+import { string_to_curve } from "../../boneh-encode/hash_to_curve.mjs";
 
 import { vkey_serialize, vkey_prepared_serialize, proof_serialize, public_input_serialize } from "../../ark-serializer/pkg";
 
