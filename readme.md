@@ -4,7 +4,7 @@ is a two-party system to prove encrypted information match.
 Two millionaires want to see if they have equal wealth without disclosing how rich they are. This is Social-Millionaire problem.
 Here is my solution using NIZK proofs and eliptic curves. I implement it inside of a smart contract.
 
-Surprisingly, once on a blockchain, this has a multidue applications: homework assignment verification, thinking biger, a way to port any puzzle game to blockchain, and even a web3 captcha to protect against dangers of AI.
+Surprisingly, once on a blockchain, this has a multidue applications: homework assignment verification, thinking biger, a way to port any puzzle game to blockchain, and even a web3 captcha to protect against dangers of AI, or thinking less big against bots.
 
 # The algorithm shortly
 
