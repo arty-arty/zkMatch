@@ -2,6 +2,7 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react-swc'
 import wasm from "vite-plugin-wasm";
 import { readFileSync } from 'fs';
+import topLevelAwait from "vite-plugin-top-level-await";
 
 import nodePolyfills from 'vite-plugin-node-stdlib-browser'
 
@@ -12,7 +13,7 @@ import path from 'path';
 // https://vitejs.dev/config/
 export default defineConfig({
 
-  plugins: [react(), wasm(), nodePolyfills()],
+  plugins: [react(), wasm(), topLevelAwait(), nodePolyfills()],
   resolve: {
     alias: {
       'ffjavascript': path.join(__dirname, 'node_modules/ffjavascript'),
@@ -20,6 +21,7 @@ export default defineConfig({
     },
   },
   build: {
+    //target: 'esnext',
     minify: false
   },
   //
