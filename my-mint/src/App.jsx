@@ -13,7 +13,11 @@ import { shake128 } from 'js-sha3';
 import { string_to_curve } from "../../boneh-encode/hash_to_curve.mjs";
 
 //
-import { vkey_serialize, vkey_prepared_serialize, proof_serialize, public_input_serialize } from "../../ark-serializer/pkg";
+//import { vkey_serialize, vkey_prepared_serialize, proof_serialize, public_input_serialize } from "../../ark-serializer/pkg";
+
+import * as wasm from "../../ark-serializer/pkg/ark_serializer_bg.wasm";
+import { __wbg_set_wasm } from "../../ark-serializer/pkg/ark_serializer_bg.js";
+import { vkey_serialize, vkey_prepared_serialize, proof_serialize, public_input_serialize } from "../../ark-serializer/pkg/ark_serializer_bg.js";
 
 import { localnetConnection, testnetConnection, TransactionBlock, Ed25519Keypair, JsonRpcProvider, RawSigner, mnemonicToSeed, Ed25519PublicKey, hasPublicTransfer } from '@mysten/sui.js';
 import { BCS, getSuiMoveConfig } from "@mysten/bcs";
@@ -379,7 +383,10 @@ const Main = () => {
   const [answer, setAnswer] = useState("");
   const [image, setImage] = useState("/question-mark.png");
   const [spinning, setSpinning] = useState(true);
-
+  useEffect(() => {
+    __wbg_set_wasm(wasm);
+    console.log("wasm set");
+  }, [])
   //const [addr, setAddr] = useState("");
   const { currentAccount, signAndExecuteTransactionBlock } = useWalletKit();
   const [showPopup, setShowPopup] = useState(true);
