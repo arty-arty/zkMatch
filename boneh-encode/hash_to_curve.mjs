@@ -1,6 +1,5 @@
 // Here I implemented a simple "try and increment" method of hashing to elliptic curve from 
 // Dan Boneh, Ben Lynn, and Hovav Shacham. Short signatures from the weil pairing. J. Cryptology, 17(4):297–319, 2004
-
 import { ZqField, Scalar } from "ffjavascript";
 import { shake128 } from 'js-sha3';
 
