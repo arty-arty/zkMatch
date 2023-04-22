@@ -1,10 +1,10 @@
-# zkMatch 
+# 👥zkMatch 
 is a two-party system to prove encrypted information match. It is a building block for verified gaming.
 
 Two millionaires want to see if they have equal wealth without disclosing how rich they are. This is Social-Millionaire problem.
 Here is my solution using NIZK proofs and eliptic curves. I implement it inside of a smart contract.
 
-Surprisingly, once on a blockchain, this has a multidue applications: homework assignment verification, thinking biger, a way to port any puzzle game to blockchain, and even a web3 captcha to protect against the dark side of AI - robots🤖.
+Surprisingly, once on a blockchain, this has a multidue applications: homework assignment verification, thinking biger, a way to port any puzzle game to blockchain, and even a web3 captcha to protect against the dark side of AI - 🦾.
 
 # So how does verified match help games?
 
