@@ -6,7 +6,7 @@ Here is my solution using NIZK proofs and eliptic curves. I implement it inside 
 
 Surprisingly, once on a blockchain, this has a multidue applications: homework assignment verification, thinking biger, a way to port any puzzle game to blockchain, and even a web3 captcha to protect against the dark side of AI - 🦾.
 
-# So how does verified match help games?
+# So, how does verified match help games?
 
 There are games to tell stories. There are games to solve mysteries. But actually, games are just tasks that require one to act in a specific way - to answer some question. 
 
