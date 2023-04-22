@@ -1,15 +1,22 @@
 # zkMatch 
-is a two-party system to prove encrypted information match.
+is a two-party system to prove encrypted information match. It is a building block for verified gaming.
 
 Two millionaires want to see if they have equal wealth without disclosing how rich they are. This is Social-Millionaire problem.
 Here is my solution using NIZK proofs and eliptic curves. I implement it inside of a smart contract.
 
-Surprisingly, once on a blockchain, this has a multidue applications: homework assignment verification, thinking biger, a way to port any puzzle game to blockchain, and even a web3 captcha to protect against dangers of AI, or thinking less big against bots.
+Surprisingly, once on a blockchain, this has a multidue applications: homework assignment verification, thinking biger, a way to port any puzzle game to blockchain, and even a web3 captcha to protect against the dark side of AI - robots.
+
+A [demo is hosted here](https://cheerful-cheesecake-30269e.netlify.app/) 
+It needs my computer running the oracle,,
+Here is a YouTube demo.
 
 # The algorithm shortly
 
 A point on an elliptic curve denotes the right answer. If a human and captcha server, using groth16, prove
 that they did a Diffie-Hellman key exchange, and they arrived at the same point, then the answer is right. 
+
+Those two circuits: the first one for initial commitment to the key, and the second for proven multiplication are
+in: [commit.circom](https://github.com/arty-arty/zkMatch/blob/master/commit.circom) and [unlock.circom](https://github.com/arty-arty/zkMatch/blob/master/unlock.circom)
 
 # When it works 
 
@@ -26,7 +33,7 @@ Even a more general statement. If there is enough information to verify the answ
 
 # Why zkNARK
 
-The use-case of NARK here is to prove that each party follows the multi-party computataion protocol as it's written. The groth16 prover is implemented in the smart contract. The contract acts as middleman. It de-incentivizes both sides for not providing the proof in time. And makes cheating meaningless and costly.
+The use-case of NARK here is to prove that each party follows the multi-party computataion protocol as it's written. The groth16 prover is implemented in [the smart contract, please see it.](https://github.com/arty-arty/zkMatch/blob/master/sui-verifier/sources/dev_verifier.move) The contract acts as middleman. It de-incentivizes both sides for not providing the proof in time. And makes cheating meaningless and costly.
 
 # A bit more details on the algorithm
 
