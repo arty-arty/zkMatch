@@ -6,16 +6,17 @@ Here is my solution using NIZK proofs and eliptic curves. I implement it inside 
 
 Surprisingly, once on a blockchain, this has a multidue applications: homework assignment verification, thinking biger, a way to port any puzzle game to blockchain, and even a web3 captcha to protect against the dark side of AI - robots.
 
-# Demo
-
-A [demo is hosted here](https://cheerful-cheesecake-30269e.netlify.app/). It needs my computer running the oracle. So, here is a [YouTube demo variant](https://youtu.be/PdydslqjhMo), just in case.
-
 # So how does verified match help games?
 
 There are games to tell stories. There are games to solve mysteries. But actually, games are just tasks that require one to act in a specific way - to answer some question. 
 
 If there is only one way to solve a level - only one answer - then zkMatch works. 
 Any such game old or new can, actually, be run on-chain. Which brings a host of possibilities like - guaranteed rewards, abolished cheating. It can be placing mirrors to guide the laser through the labirynth. It can be finding one concept which unites four pictures. It can be guessing which brand is on the logo. This a general solution to rule them all.
+
+# Demo
+is an application of this principle. Here it is an NFT minting game. With a difficult puzzle only human can solve to protect against bots.
+
+A [demo is hosted here](https://cheerful-cheesecake-30269e.netlify.app/). It needs my computer running the oracle. So, here is a [YouTube demo variant](https://youtu.be/PdydslqjhMo), just in case.
 
 # The algorithm shortly
 
