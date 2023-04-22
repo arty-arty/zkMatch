@@ -61,7 +61,7 @@ Then if they are equal we had same answers. Seems like no information leaked und
 # Conclusion
 
 I hope that this working prototype sparks more converstation about verified games. And their general - often occuring - bulding blocks.
-Here it is a captcha system, but most of the puzzle games can be expressed in question-answer format. So, the same smart contract on Sui testnet can "supervise" such games.
+Here the demo is a captcha system, but most of the puzzle games can be expressed in question-answer format. So, the same smart contract on Sui testnet can "supervise" such games.
 So, there is no more cheating and there are always guaranteed rewards. The future of games!
 
 
