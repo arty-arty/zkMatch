@@ -14,9 +14,9 @@ If there is only one way to solve a level - only one answer - then zkMatch works
 Any such game old or new can, actually, be run on-chain. Which brings a host of possibilities like - guaranteed rewards, abolished cheating. It can be placing mirrors to guide the laser through the labirynth. It can be finding one concept which unites four pictures. It can be guessing which brand is on the logo. This a general solution to rule them all.
 
 # Demo
-is an application of this principle. Here it is an NFT minting game. With a difficult puzzle only human can solve to protect against bots. See the de,o [source code here](https://github.com/arty-arty/zkMatch/blob/ed4e3aae599be228f97c38fc7d95cc75f4114a47/my-mint/src/App.jsx#L219).
+is an application of this principle. Here it is an NFT minting game. With a difficult puzzle only human can solve to protect against bots. See the [demo source code](https://github.com/arty-arty/zkMatch/blob/ed4e3aae599be228f97c38fc7d95cc75f4114a47/my-mint/src/App.jsx#L219).
 
-A [demo is hosted here](https://cheerful-cheesecake-30269e.netlify.app/). It needs my computer running the oracle. So, here is a [YouTube demo variant](https://youtu.be/PdydslqjhMo), just in case.
+A [demo is hosted here](https://cheerful-cheesecake-30269e.netlify.app/). It needs my computer running the oracle. So, there is a [YouTube demo variant](https://youtu.be/PdydslqjhMo), just in case.
 
 # The algorithm shortly
 
