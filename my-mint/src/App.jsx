@@ -1,19 +1,14 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-//import { useWalletConnect } from "@walletconnect/react-native-dapp";
 import { WalletKitProvider } from "@mysten/wallet-kit";
 
 import { ConnectButton, useWalletKit } from "@mysten/wallet-kit";
 import { formatAddress } from "@mysten/sui.js";
-//import { groth16 } from "snarkjs";
 
 import { ZqField, Scalar } from "ffjavascript";
 import { shake128 } from 'js-sha3';
 
 import { string_to_curve } from "../../boneh-encode/hash_to_curve.mjs";
-
-//
-//import { vkey_serialize, vkey_prepared_serialize, proof_serialize, public_input_serialize } from "../../ark-serializer/pkg";
 
 import * as wasm from "../../ark-serializer/pkg/ark_serializer_bg.wasm";
 import { __wbg_set_wasm } from "../../ark-serializer/pkg/ark_serializer_bg.js";
@@ -28,8 +23,10 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
 
+//The following four functions are just playing with encoding between field Big integers 
+//and their representations inside of the smart contract
+
 function arr_to_bigint(arr) {
-  //let arr = new Uint8Array(buf);
   let result = BigInt(0);
   for (let i = arr.length - 1; i >= 0; i--) {
     result = result * BigInt(256) + BigInt(arr[i]);
@@ -67,16 +64,18 @@ function addr_to_bigint(addr) {
   return arr_to_bigint(interm);
 }
 
-// const bcs = new BCS(getSuiMoveConfig());
+
+//Generate a random one-time key to multiply by professors result
 const r = Scalar.fromString("2736030358979909402780800718157159386076813972158567259200215660948447373041");
 const F = new ZqField(r);
 const student_key = F.random().toString();
-//!!End of must be kept secret section!!
 
+//Get .move package on Sui testnet address from .env
 const verifier_pkg = process.env.packageId;
 const quest_id = process.env.questId;
 console.log({ verifier_pkg, quest_id });
 
+//Define the styled components for the demo website
 const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -173,40 +172,6 @@ const Form = styled.form`
   max-width: 500px;
   width: 90%;
 `;
-// const Column = styled.div`
-//   display: flex;
-//   flex-direction: column;
-//   align-items: center;
-//   justify-content: center;
-//   width: 100%;
-//   margin-bottom: 20px;
-
-//   @media (min-width: 768px) {
-//     flex-direction: row;
-//     justify-content: flex-start;
-//     align-items: center;
-//   }
-// `;
-
-// const InputColumn = styled(Column)`
-//   align-items: center;
-
-//   @media (min-width: 768px) {
-//     width: 70%;
-//     margin-right: 20px;
-//     align-items: flex-start;
-//     justify-content: flex-start;
-//   }
-// `;
-
-// const ImageColumn = styled(Column)`
-//   @media (min-width: 768px) {
-//     width: 30%;
-//     margin-left: 20px;
-//     align-items: center;
-//     justify-content: flex-start;
-//   }
-// `;
 
 const Column = styled.div`
   display: flex;
@@ -237,11 +202,9 @@ const ImageColumn = styled(Column)`
   // }
 `;
 
+//A component that is a wallet connect button
 function ConnectToWallet() {
   const { currentAccount } = useWalletKit();
-  //if (currentAccount) setAddr(currentAccount.address);
-  //console.log({ currentAccount })
-  //const currentAccount = { address: "h" }
   return (
     <ConnectButton
       connectText={"Connect Wallet"}
@@ -250,16 +213,15 @@ function ConnectToWallet() {
   );
 }
 
+//A function where the main work happens
+//Here we prove the arithmetic circuits with snarkjs, serialize the data with ark-works
+//And send transaction to Sui network smart contract
 async function answer_quest(snarkjs, addr, quest_id, student_answer) {
 
+  //Encode the answer to a point on elliptic curve using try-and-increment method
   const { xx: student_H_x, yy: student_H_y } = string_to_curve(student_answer);
 
-  //const keypair = Ed25519Keypair.deriveKeypair(mnemonic);
-
   const provider = new JsonRpcProvider(testnetConnection);
-  //const signer = new RawSigner(keypair, provider);
-
-  //const addr = await signer.getAddress()
   const addr_for_proof = addr_to_bigint(addr).toString();
   console.log(addr_for_proof);
 
@@ -289,6 +251,7 @@ async function answer_quest(snarkjs, addr, quest_id, student_answer) {
   });
   console.log({ quest_object })
   const { professor_kP_x, professor_kP_y } = quest_object.fields;
+
   //Convert bytes to utf-8 string
   //Then decode this hex encoded string to bytes
   //Take those bytes and convert to number
@@ -313,27 +276,19 @@ async function answer_quest(snarkjs, addr, quest_id, student_answer) {
   console.log({ akP_x, akP_y });
   //END: Generate unlock proof of student multiplied professors point with her same key//
 
-  //Check proof
-  // const vKey = JSON.parse(fs.readFileSync("compiled_circuits/commit_main.groth16.vkey.json"));
-
-  // const res = await snarkjs.groth16.verify(vKey, publicSignals, proof);
-
-  // if (res === true) {
-  //     console.log("Verification OK");
-  // } else {
-  //     console.log("Invalid proof");
-  // }
-
   //Send the transaction to the verifier implemented in ../sui-verifier/sources/dev_verifier.moive on-chain smart contract
   const tx = new TransactionBlock();
 
   //In 1 SUI 1_000_000_000 MIST
   //Just 1000 MIST - a small amount for test; Though in production it reqires 0.1 SUI to deincentivize bruteforcing
+  //You might set any ammount needed in dev_verifier.move and tweak it here accordingly
   const [coin] = tx.splitCoins(tx.gas, [tx.pure(1000)]);
 
   //Smart contract method signature of student_answer_question(shared_quest: &mut Quest, c: coin::Coin<SUI>, proof_commit: vector<u8>,
   //student_a_hash: vector<u8>, student_aH_x: vector<u8>, student_aH_y: vector<u8>, 
   //proof_unlock: vector<u8>, akP_x: vector<u8>, akP_y: vector<u8>, ctx: &TxContext)
+
+  //Here we assemble a transaction in agreement with this method signature
   tx.moveCall({
     target: verifier_pkg + '::verifier::student_answer_question',
     typeArguments: [],
@@ -355,8 +310,6 @@ async function answer_quest(snarkjs, addr, quest_id, student_answer) {
   )
   console.log({ tx })
   return tx;
-  // const result = await signer.signAndExecuteTransactionBlock({ transactionBlock: tx });
-  // console.log({ result });
 }
 
 const provider = new JsonRpcProvider(testnetConnection);
@@ -368,34 +321,35 @@ const provider = new JsonRpcProvider(testnetConnection);
 //Add many toasts with congratulations
 //And explanations
 
-// const devnetNftFilter = {
-//   MoveModule: { package: verifier_pkg, module: 'verifier' }
-// };
-// const devNftSub = await provider.subscribeEvent({
-//   filter: devnetNftFilter,
-//   onMessage(event) {
-//     console.log({ event })
-//     // handle subscription notification message here
-//   },
-// });
 
 const Main = () => {
+
+  //Initialize the state of react application with data we may want to track
+  //And which influences the outcome of program execution
   const [answer, setAnswer] = useState("");
   const [image, setImage] = useState("/question-mark.png");
   const [spinning, setSpinning] = useState(true);
+  const [showPopup, setShowPopup] = useState(true);
+  const [objects, setObjects] = useState([]);
+
+  //Load the wasm for my ark-serialzier module
+  //It works fine without it in dev mode i.e (npm run dev)
+  //But in production mode like on netlify vite "forgets" to do it, so we manually should init the module here
   useEffect(() => {
     __wbg_set_wasm(wasm);
     console.log("wasm set");
   }, [])
-  //const [addr, setAddr] = useState("");
+
+  //Use wallet hook given by MystenLabs to propose transactions and see current connected account address
   const { currentAccount, signAndExecuteTransactionBlock } = useWalletKit();
-  const [showPopup, setShowPopup] = useState(true);
 
-  const [objects, setObjects] = useState([]);
-
+  //Here is every 2 seconds checker for changes in the list of objects owned by a person
+  //If it changes and she suddenly gets an NFT then we congratulate
+  //If it changes and the player gets wrong answer record the we say sorry and encourage trying more
   useEffect(() => {
     const intervalId = setInterval(async () => {
 
+      //Fetch owned object
       const fetchedObjects = await provider.getOwnedObjects({
         owner: currentAccount.address,
         options: { showContent: true },
@@ -408,6 +362,10 @@ const Main = () => {
       if (JSON.stringify(objects) !== JSON.stringify(fetchedObjects) && objects?.data?.length > 0 && fetchedObjects?.data?.length > 0) {
         setObjects(fetchedObjects);
         console.log("changed objects")
+
+        //We need a system with sets because by default versions and digests of objects might change
+        //Like when sending coins to interact with this contract
+        //It would give us a false start without proper tracking
         const set2 = new Set(objects.data.map(obj => obj.data.objectId));
         const set1 = new Set(fetchedObjects.data.map(obj => obj.data.objectId));
 
@@ -419,17 +377,16 @@ const Main = () => {
         const diffObjArray = fetchedObjects.data.filter(obj => differenceArray.includes(obj.data.objectId));
         console.log({ differenceArray, diffObjArray });
 
+        //This is event of right answer when a person finally got rewarded with an NFT
         if (diffObjArray.some(obj => obj?.data?.content?.type === verifier_pkg + "::verifier::ProfessorNFT")) {
-          console.log("List of owned objects contains an object with the name 'professorNFT'");
           setSpinning(false);
           toast.success('Yes you were right! Look for a new friend in your wallet!!!');
           setImage("https://ipfs.io/ipfs/bafybeifpvivgf4iuvwjv6r3z3ocuwrq3rpvb27xq32rnz6wepqgikd4x2m")
         }
+
+        //This is event of wrong answer when a person just got a WrongAnswerNFT record
         if (diffObjArray.some(obj => obj?.data?.content?.type === verifier_pkg + "::verifier::WrongAnswerNFT")) {
-          console.log("List of owned objects contains an object with the name 'professorNFT'");
-          //setSpinning(false);
           toast.error('Sorry, the zk score came. It was a wrong answer. Please try more!!!');
-          //setImage("https://ipfs.io/ipfs/bafybeifpvivgf4iuvwjv6r3z3ocuwrq3rpvb27xq32rnz6wepqgikd4x2m")
         }
       }
 
@@ -442,31 +399,22 @@ const Main = () => {
   const handleClosePopup = () => {
     setShowPopup(false);
   };
-  //if (currentAccount) provider.
-  //const snarkjs = useSnarkjs();
-  //console.log(snarkjs.default)
-  //const { connect, connected } = useWalletConnect();
-  //console.log(window.snarkjs)
+
   const handleSubmit = async (event) => {
     event.preventDefault();
-    //Do some alert or cool down.
-    //toast.success('The operation was successful!');
-    //toast.error('An error occurred!');
-    //toast.warning('Please be careful!');
-    toast.info('Please approve the transaction to submit your answer :)');
-    //toast.info('Your answer was submitted. Please wait 10-20 seconds until you get scored!');
 
+    toast.info('Please approve the transaction to submit your answer :)');
+
+    //Use the function with zk proofs to generate the proving transaction
     const txBlock = await answer_quest(window.snarkjs, currentAccount.address, quest_id, answer);
     await signAndExecuteTransactionBlock({ transactionBlock: txBlock });
 
+    //Warn that scoring by oracle run on my computer
+    //Will take some time for transaction to pass
+    //Hopefully the internet will not break!
     toast.warning('Please wait 10-20 seconds to get zk scored!');
 
-
-    // check if answer is correct
-    if (answer.toLowerCase() === "tree") {
-      setImage("/nft.png");
-    }
-
+    //Reset the answer field
     setAnswer("");
   };
 
@@ -475,11 +423,12 @@ const Main = () => {
       <Modal isOpen={showPopup} onRequestClose={handleClosePopup}>
         <div className="popup-content">
           <h2>Welcome to our site!</h2>
-          <p>Here's how to use our site:</p>
+          <p>This is zero-knowledge system to check if your answer matches the answer on server.
+            The smart contract protects you. It allows only verified answers. As were commited. Here's how to use our site:</p>
           <ul>
-            <li>Step 1: Do this</li>
-            <li>Step 2: Do that</li>
-            <li>Step 3: Profit!</li>
+            <li>Step 1: Connect your wallet.</li>
+            <li>Step 2: If you are really sure. Type your answer. Click mint NFT. And approve the transaction.</li>
+            <li>Step 3: Wait until the smart contract receives the verified score. If you were right you will 100% receive the NFT.</li>
           </ul>
           <button onClick={handleClosePopup}>Close</button>
         </div>
@@ -488,12 +437,6 @@ const Main = () => {
       <ConnectToWallet></ConnectToWallet>
       {spinning ? <Form onSubmit={handleSubmit}>
         <ImageColumn>
-
-
-          {/* {!connected && (
-        <WalletConnectButton onClick={() => connect()}>Connect Wallet</WalletConnectButton>
-      )}
-      {connected && <p>Wallet Connected</p>} */}
         </ImageColumn>
         <InputColumn>
           <Question>What do you get when you add the right answer to the end of this puzzle?</Question>

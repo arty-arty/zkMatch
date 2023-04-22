@@ -12,6 +12,7 @@ const fs = require("fs");
 async function publish(cliPath, packagePath) {
     const { execSync } = require('child_process');
 
+    //Compile .move into base64 bytecode
     const { modules, dependencies } = JSON.parse(
         execSync(
             `${cliPath} move build --dump-bytecode-as-base64 --path ${packagePath}`,
@@ -24,12 +25,16 @@ async function publish(cliPath, packagePath) {
         dependencies,
     });
     tx.transferObjects([upgradeCap], tx.pure(await signer.getAddress()));
+
+    //Send the transaction to publish it and obtain Upgrade Capability
     const result = await signer.signAndExecuteTransactionBlock({
         transactionBlock: tx,
     });
     console.log({ result });
 
+    //A hardcoded digest for debug purpose
     //const result = { digest: "CexfXgF67BTmZ9jjuDpc5wzRA4LzpjY61B1s9chEh6yW" };
+
     //Lookup this transaction block by digest
     await new Promise(r => setTimeout(r, 10000));
 
@@ -39,18 +44,18 @@ async function publish(cliPath, packagePath) {
         options: { showEffects: true },
     });
 
+    //And find the right transaction which created the contract
     const created = effects.effects.created.filter(effect => effect.owner == "Immutable")
     console.log({ result }, effects.effects.created, created, effects.effects.created[0].reference.objectId);
 
     const package_id = created[0].reference.objectId;
 
+    //Output the new created package id in a text file
     fs.writeFile('package.id', package_id, (err) => {
         if (err) throw err;
         console.log('Package ID saved to file!');
     });
 
-    //And find the right transaction which created the contract
-    //Output the new created package id in a text file
 
 }
 

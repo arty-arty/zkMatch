@@ -20,30 +20,6 @@ module dev::verifier {
     use sui::package;
     use sui::display;
 
-    //  public entry fun verify(proof: vector<u8>, public_1: vector<u8>, public_2: vector<u8>) {
-    //     let proof_serialized = hex::decode(proof);
-    //     let vk_serialized: vector<u8> = x"e2f26dbea299f5223b646cb1fb33eadb059d9407559d7441dfd902e3a79a4d2dabb73dc17fbc13021e2471e0c08bd67d8401f52b73d6d07483794cad4778180e0c06f33bbc4c79a9cadef253a68084d382f17788f885c9afd176f7cb2f036789edf692d95cbdde46ddda5ef7d422436779445c5e66006a42761e1f12efde0018c212f3aeb785e49712e7a9353349aaf1255dfb31b7bf60723a480d9293938e19fa699e9b4686fe2e83e951ed08534d6ab5d093d542ee8fdd5e75100b3814f90c87d3f290481b05e1c7c8fc78dba5fb07466a907b7dfcc6002f77a0b49b9635ac0300000000000000b4562156b4f417c86474d80d460c8e373ced90ba3348154ff962ed73b56533291181cf9baaa5ae17c7a2a51a3799c4759154f0b4b27e7f766a360d28f628190daf527193c5e10913c6eb3f7b189b29ad878e0e097cf4ce2cceaec37a6f6e8c01";
-    //     let curve: Curve = bn254();
-    //     let public_inputs_serialized: vector<u8> = x"";
-    //     append(&mut public_inputs_serialized, hex::decode(public_1));
-    //     append(&mut public_inputs_serialized, hex::decode(public_2));
-    //     //let proof_serialized: vector<u8> = x"887cca600d0c168ad9a4db59ac8aaeb1519bc821a0af0b5df7e459eb82660c152d1bbc390bf3b03155a8530ede05265d8c8574aece938c9d54f6950993891f7808d694c4352ef93dd1bb59e272a383e4a07c4e60a5d847f6b395dc24a00b59c5173b7a96843a2c5d1516b0ba68c96829f1a02e005dcb4d41406088a8b5d4deac527ff89db2ddc497414bdb35c229a7c786b7678ce2d5e23de57634f84567cb55b651cb5ee4910473965e2fd60755d6c89314add6024d59ea737e5bc769f9c3a8";
-        
-
-    
-    //     let pvk = prepare_verifying_key(&curve, &vk_serialized);
-        
-    //     let public_inputs =  public_proof_inputs_from_bytes(public_inputs_serialized);
-    //     let proof_points =  proof_points_from_bytes(proof_serialized);
-
-    //     let verification_result: bool = verify_groth16_proof(&curve, &pvk, &public_inputs, &proof_points);
-        
-    //     //let a: u64 = 64;
-    //     assert!(verification_result, 1337);
-    // }
-
-    //Shared object Map
-    //Quest_id - would be kP_x, kP_y
     struct ProfessorNFT has key, store{
         id: UID,
         name: String,
@@ -279,13 +255,8 @@ module dev::verifier {
         let proof_serialized = hex::decode(proof);
         let curve: Curve = bn254();
 
-        let pvk = prepare_verifying_key(&curve, &vk_serialized);
-        // let pvk = pvk_from_bytes(vk_gamma_abc_g1_bytes,
-        //     alpha_g1_beta_g2_bytes,
-        //     gamma_g2_neg_pc_bytes,
-        //     delta_g2_neg_pc_bytes);
+        let pvk = prepare_verifying_key(&curve, &vk_serialized);    
         debug::print(&pvk);
-        //debug::print(&pvk_bad);
         let public_inputs =  public_proof_inputs_from_bytes(public_inputs_serialized);
         let proof_points =  proof_points_from_bytes(proof_serialized);
         verify_groth16_proof(&curve, &pvk, &public_inputs, &proof_points)
@@ -293,14 +264,8 @@ module dev::verifier {
 
     fun commit(proof: vector<u8>, public_out_hash_a: vector<u8>, public_out_aP_x: vector<u8>, 
     public_out_aP_y: vector<u8>, public_in_address: vector<u8>): bool {
-        //let vk_serialized: vector<u8> = x"e2f26dbea299f5223b646cb1fb33eadb059d9407559d7441dfd902e3a79a4d2dabb73dc17fbc13021e2471e0c08bd67d8401f52b73d6d07483794cad4778180e0c06f33bbc4c79a9cadef253a68084d382f17788f885c9afd176f7cb2f036789edf692d95cbdde46ddda5ef7d422436779445c5e66006a42761e1f12efde0018c212f3aeb785e49712e7a9353349aaf1255dfb31b7bf60723a480d9293938e19f2120a4cbd4b722565aaec93c9396b90f08e18ef349d17266829ca76b93ec11698665b0b5fcf6c7aec74b944e9d26c390970feff9c35cdba1f615bb27e541a820500000000000000d05232298846333af5b9c786e300fb364e8f91277dfbd9113761976ef811bd8ae05f5921e1ea4e7a81d8e1217b553562139326591186de5ad755c02ca9519e2a2c8cd74dd2ca1759a54bcfd8d6bb03fcc2fc185ea98112e22fd667275112c7202c27f5c74e447fb310add441802dfa1d53bc87297703e7a90d0438166a2ab6a87b2099a5ca41e6c4c88a00eee53d4bd51c95d13cb8d03d19fa68352e59e9d997";
         let vk_serialized = x"e2f26dbea299f5223b646cb1fb33eadb059d9407559d7441dfd902e3a79a4d2dabb73dc17fbc13021e2471e0c08bd67d8401f52b73d6d07483794cad4778180e0c06f33bbc4c79a9cadef253a68084d382f17788f885c9afd176f7cb2f036789edf692d95cbdde46ddda5ef7d422436779445c5e66006a42761e1f12efde0018c212f3aeb785e49712e7a9353349aaf1255dfb31b7bf60723a480d9293938e19f1555ee802f49f17c1ded7f8e0a35efd4a7caa5c66b14c5de3bc15e7ac579e02350ae505a137c6dd2a84365a88f2771ab96e4e33c0fdaf5b58ca9cf8528045870500000000000000d05232298846333af5b9c786e300fb364e8f91277dfbd9113761976ef811bd8ae05f5921e1ea4e7a81d8e1217b553562139326591186de5ad755c02ca9519e2a2c8cd74dd2ca1759a54bcfd8d6bb03fcc2fc185ea98112e22fd667275112c7202c27f5c74e447fb310add441802dfa1d53bc87297703e7a90d0438166a2ab6a87b2099a5ca41e6c4c88a00eee53d4bd51c95d13cb8d03d19fa68352e59e9d997";
         
-        // let vk_gamma_abc_g1_bytes: vector<u8> = x"d05232298846333af5b9c786e300fb364e8f91277dfbd9113761976ef811bd8ae05f5921e1ea4e7a81d8e1217b553562139326591186de5ad755c02ca9519e2a2c8cd74dd2ca1759a54bcfd8d6bb03fcc2fc185ea98112e22fd667275112c7202c27f5c74e447fb310add441802dfa1d53bc87297703e7a90d0438166a2ab6a87b2099a5ca41e6c4c88a00eee53d4bd51c95d13cb8d03d19fa68352e59e9d997";
-        // let alpha_g1_beta_g2_bytes: vector<u8> = x"0d14dc30b678357d988b3eb0e8ada11bc7b2b5d2cf0c1fe27522cb2a819b7c044a601bd9302a94a80677a9f72ebeaada131e9bfba30621c8f038b547beb9962e182089742c1d388436771390c6af9937729c39e6414746ee5636c4741d1f220df45c80a7cded5ad653bc4f8b201c94054918dee160e1dc90cea027d4ec69e01a6df0f8d739d7911aa63b6b6923f10cdce763de1046fe0f91d590f5f510397611c57ac6daac2f9222d8cc3130e57f99dcd2edecb3e1d11b860c0d9d64a5dda30f42b8a8e513c9d5983486332c3ecd1236192b988666c15818838559bc27b6a50f49fee88fd43ac88dc3e75419bfd451374e25b8c4845b4bfcbd460ad48bb55016e4e1edf293696a43b76c8a5feffe6cfddb59cd7bc0246c1784061ed3eff2280a74e56fcabc5b93d84d72e10a0ad78079b02d06cc8c3ae435936ce2e85722d82b9480a46f039988a80cf4ca669c026100f8ce3fbc5298180dec08d2055d7a621ad3cc4fdd99242a86d7c80528d3b438c4669288c56b77abb8367528a31f01c511";
-        // let gamma_g2_neg_pc_bytes: vector<u8> = x"edf692d95cbdde46ddda5ef7d422436779445c5e66006a42761e1f12efde0018c212f3aeb785e49712e7a9353349aaf1255dfb31b7bf60723a480d9293938e99";
-        // let delta_g2_neg_pc_bytes: vector<u8> = x"f1555ee802f49f17c1ded7f8e0a35efd4a7caa5c66b14c5de3bc15e7ac579e02350ae505a137c6dd2a84365a88f2771ab96e4e33c0fdaf5b58ca9cf852804507";
-
         let public_inputs_serialized: vector<u8> = x"";
         append(&mut public_inputs_serialized, hex::decode(public_out_hash_a));
         append(&mut public_inputs_serialized, hex::decode(public_out_aP_x));
@@ -316,14 +281,8 @@ module dev::verifier {
 
     fun unlock(proof: vector<u8>, public_out_kaH_x: vector<u8>, public_out_kaH_y: vector<u8>, 
     public_in_address: vector<u8>, public_in_hash_k: vector<u8>, public_in_aH_x: vector<u8>, public_in_aH_y: vector<u8>, ): bool {
-        //let vk_serialized: vector<u8> = x"e2f26dbea299f5223b646cb1fb33eadb059d9407559d7441dfd902e3a79a4d2dabb73dc17fbc13021e2471e0c08bd67d8401f52b73d6d07483794cad4778180e0c06f33bbc4c79a9cadef253a68084d382f17788f885c9afd176f7cb2f036789edf692d95cbdde46ddda5ef7d422436779445c5e66006a42761e1f12efde0018c212f3aeb785e49712e7a9353349aaf1255dfb31b7bf60723a480d9293938e19887208fad3f8550e15bf3215798913226934b2d643d5a5f9c34a048aa168172467d50cca4f282065b87d49e7bc3e06b50b3675c66a1c2db2fedd8cbeed76ae2b0700000000000000d05232298846333af5b9c786e300fb364e8f91277dfbd9113761976ef811bd8a87f7c971b71d490782ad5a062ba629c632d23a8c32ccccbd6f90eef0706f4dae0de6bf1b29e90ec277a567aa9582c21e84322e41eb92789b0bec360a94061887494fd99769977a167bced33324f2e2fd654f141dc77844d8375e2d2d6bb55890c863813be5a227e8cc56108364ec7b07228479a299c26da09771ccb3b31a4a074616f0b4ea057686c6fd2d5bffbd4165a352e61744f2b27a971952ace6a9881061021a3b9efae96006b4e0334b7c0a437e941ebf91de9981acba5608b3825a08";
         let vk_serialized = x"e2f26dbea299f5223b646cb1fb33eadb059d9407559d7441dfd902e3a79a4d2dabb73dc17fbc13021e2471e0c08bd67d8401f52b73d6d07483794cad4778180e0c06f33bbc4c79a9cadef253a68084d382f17788f885c9afd176f7cb2f036789edf692d95cbdde46ddda5ef7d422436779445c5e66006a42761e1f12efde0018c212f3aeb785e49712e7a9353349aaf1255dfb31b7bf60723a480d9293938e19887208fad3f8550e15bf3215798913226934b2d643d5a5f9c34a048aa168172467d50cca4f282065b87d49e7bc3e06b50b3675c66a1c2db2fedd8cbeed76ae2b0700000000000000d05232298846333af5b9c786e300fb364e8f91277dfbd9113761976ef811bd8a87f7c971b71d490782ad5a062ba629c632d23a8c32ccccbd6f90eef0706f4dae0de6bf1b29e90ec277a567aa9582c21e84322e41eb92789b0bec360a94061887494fd99769977a167bced33324f2e2fd654f141dc77844d8375e2d2d6bb55890c863813be5a227e8cc56108364ec7b07228479a299c26da09771ccb3b31a4a074616f0b4ea057686c6fd2d5bffbd4165a352e61744f2b27a971952ace6a9881061021a3b9efae96006b4e0334b7c0a437e941ebf91de9981acba5608b3825a08";
         
-        // let vk_gamma_abc_g1_bytes: vector<u8> = x"";
-        // let alpha_g1_beta_g2_bytes: vector<u8> = x"";
-        // let gamma_g2_neg_pc_bytes: vector<u8> = x"";
-        // let delta_g2_neg_pc_bytes: vector<u8> = x"";
-
         let public_inputs_serialized: vector<u8> = x"";
         append(&mut public_inputs_serialized, hex::decode(public_out_kaH_x));
         append(&mut public_inputs_serialized, hex::decode(public_out_kaH_y));
@@ -377,6 +336,7 @@ module dev::verifier {
         transfer::public_transfer(display, tx_context::sender(ctx));
     }
 }
+
 // module dev::verifier_Tests {
 //     use dev::verifier::{Self};
 //     use sui::test_scenario as ts;

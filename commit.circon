@@ -63,10 +63,6 @@ component main { public [ address ] } = Example();
     "P_y" : "5472060717959818805561601436314318772137091100104008585924551046643952123905"
 } */
 
-    // var unused = 4;
-    // assert(a > 2);
-    // log("hash", hash.out); 
-
 //https://eips.ethereum.org/EIPS/eip-2494
 //https://github.com/iden3/circomlib/blob/master/circuits/babyjub.circom
 //https://github.com/iden3/circomlib/blob/master/circuits/escalarmulany.circom
@@ -75,6 +71,4 @@ component main { public [ address ] } = Example();
 //On Malleability https://geometry.xyz/notebook/groth16-malleability
 //https://xn--2-umb.com/22/groth16/
 
-//Do a sefety check that key is not zero
-//Or not same meaning
 

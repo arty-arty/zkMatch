@@ -119,17 +119,6 @@ async function answer_quest(quest_id, student_answer) {
     console.log({ akP_x, akP_y });
     //END: Generate unlock proof of student multiplied professors point with her same key//
 
-    //Check proof
-    // const vKey = JSON.parse(fs.readFileSync("compiled_circuits/commit_main.groth16.vkey.json"));
-
-    // const res = await snarkjs.groth16.verify(vKey, publicSignals, proof);
-
-    // if (res === true) {
-    //     console.log("Verification OK");
-    // } else {
-    //     console.log("Invalid proof");
-    // }
-
     //Send the transaction to the verifier implemented in ../sui-verifier/sources/dev_verifier.moive on-chain smart contract
     const tx = new TransactionBlock();
 
@@ -163,19 +152,6 @@ async function answer_quest(quest_id, student_answer) {
     console.log({ result });
 }
 
-// async function run() {
-//     const professor_addr_bytes = bcs.ser("address", verifier_pkg).toBytes()
-//     //const hex = Uint8Array.from(Buffer.from("ba83bbc76bb22ad7f1e62a6e3f2d129df729f4489af8f75b06fec1f91b38acfc", 'hex'));
-//     //console.log(professor_addr_bytes, hex)
-
-//     const { proof, publicSignals } = await snarkjs.groth16.fullProve({ address: 10, a: 21, P_x: "995203441582195749578291179787384436505546430278305826713579947235728471134", P_y: "5472060717959818805561601436314318772137091100104008585924551046643952123905" }, "compiled_circuits/commit_main.wasm", "compiled_circuits/commit_main.groth16.zkey");
-
-//     console.log("Proof: ");
-//     console.log(JSON.stringify(proof, null, 1));
-
-// }
-
-//const uploaded_quest_id = "0xd6b8e458cd32d6b316b0c3a36003ffe24ac1b143c87b288294650ec01b2df787"
 const uploaded_quest_id = fs.readFileSync('quest.id', 'utf8').trim();
 console.log(verifier_pkg);
 answer_quest(uploaded_quest_id, "peace")
