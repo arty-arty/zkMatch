@@ -51,9 +51,19 @@ The contract can handle as many different questions at the same time as one neee
 
 # A bit more details on the algorithm
 
-Shortly, the idea is to encode the answers by hashing to a point on the elliptic curve, and prove that both parties obeyed Diffie-Hellman exchange. 
+The idea is to encode the answers by hashing to a point on the elliptic curve, and prove that both parties obeyed Diffie-Hellman exchange. 
 If they could arrive at the same point it means that they started from the same point, if they could not then answers were different.
 
 To ellaborate, P is a to-curve hash of my answer. And k is my random key. And a is professor's random key. I commit to kP and professor commited to aP'. We do proven by a circom circuit Diffie-Hellman. We get akP and akP'. Look more into [professor.js to see implementation](https://github.com/arty-arty/zkMatch/blob/master/client-scripts/professor.js) of this oracle logic.
 
 Then if they are equal we had same answers. Seems like no information leaked under Decisional Diffie-Hellman assumption. Or some sort of a multi-linear generalization, if many past tries are available in public.
+
+# Conclusion
+
+I hope that this working prototype sparks more converstation about verified games. And their general - often occuring - bulding blocks.
+Here it is a captcha system, but most of the puzzle games can be expressed in question-answer format. So, the same smart contract on Sui testnet can "supervise" such games.
+So, there is no more cheating and there are always guaranteed rewards. The future of games!
+
+
+
+
