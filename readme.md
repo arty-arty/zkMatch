@@ -14,7 +14,7 @@ If there is only one way to solve a level - only one answer - then zkMatch works
 Any such game old or new can, actually, be run on-chain. Which brings a host of possibilities like - guaranteed rewards, abolished cheating. It can be placing mirrors to guide the laser through the labirynth. It can be finding one concept which unites four pictures. It can be guessing which brand is on the logo. This a general solution to rule them all.
 
 # Demo
-is an application of this principle. Here it is an NFT minting game. With a difficult puzzle only human can solve to protect against bots.
+is an application of this principle. Here it is an NFT minting game. With a difficult puzzle only human can solve to protect against bots. See the de,o [source code here](https://github.com/arty-arty/zkMatch/blob/ed4e3aae599be228f97c38fc7d95cc75f4114a47/my-mint/src/App.jsx#L219).
 
 A [demo is hosted here](https://cheerful-cheesecake-30269e.netlify.app/). It needs my computer running the oracle. So, here is a [YouTube demo variant](https://youtu.be/PdydslqjhMo), just in case.
 
@@ -30,6 +30,8 @@ in: [commit.circom](https://github.com/arty-arty/zkMatch/blob/master/commit.circ
 
 The proof relies on DDH - Decisional Diffie-Hellman assumption. It holds for elliptic curves with high embedding degree where pairings are not efficiently computable. 
 
+When the adversary sees more tries. Breaking the system this way tranforms into finding multi-linear pairings. And there are [some additional reasons](https://crypto.stanford.edu/~dabo/papers/mlinear.pdf) why it seems difficult.  
+
 # Why non-trivial
 
 The difficulty was that it involes two parties, say, student and professor. So it is a multi-party computation protocol. The professor holds a secret - the true answer. The hardest thing, this answer belongs to a very small set. Might be just three options for a multiple choice test.
@@ -43,10 +45,15 @@ Even a more general statement. If there is enough information to verify the answ
 
 The use-case of NARK here is to prove that each party follows the multi-party computataion protocol as it's written. The groth16 prover is implemented in [the smart contract, please see it.](https://github.com/arty-arty/zkMatch/blob/master/sui-verifier/sources/dev_verifier.move) The contract acts as middleman. It de-incentivizes both sides for not providing the proof in time. And makes cheating meaningless and costly.
 
+The cost of a try can be [tweaked here](https://github.com/arty-arty/zkMatch/blob/ed4e3aae599be228f97c38fc7d95cc75f4114a47/sui-verifier/sources/dev_verifier.move#L124). 
+[Use deploy.js](https://github.com/arty-arty/zkMatch/blob/master/client-scripts/deploy.js) if you want to ship your own version.
+The contract can handle as many different questions at the same time as one neeeds.
+
 # A bit more details on the algorithm
 
 Shortly, the idea is to encode the answers by hashing to a point on the elliptic curve, and prove that both parties obeyed Diffie-Hellman exchange. 
 If they could arrive at the same point it means that they started from the same point, if they could not then answers were different.
 
-To ellaborate, P is a to-curve hash of my answer. And k is my random key. And a is professor's random key. I commit to kP and professor commited to aP'. We do proven by a circom circuit Diffie-Hellman. We get akP and akP'.
+To ellaborate, P is a to-curve hash of my answer. And k is my random key. And a is professor's random key. I commit to kP and professor commited to aP'. We do proven by a circom circuit Diffie-Hellman. We get akP and akP'. Look more into [professor.js to see implementation](https://github.com/arty-arty/zkMatch/blob/master/client-scripts/professor.js) of this oracle logic.
+
 Then if they are equal we had same answers. Seems like no information leaked under Decisional Diffie-Hellman assumption. Or some sort of a multi-linear generalization, if many past tries are available in public.
