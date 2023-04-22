@@ -6,9 +6,9 @@ Here is my solution using NIZK proofs and eliptic curves. I implement it inside 
 
 Surprisingly, once on a blockchain, this has a multidue applications: homework assignment verification, thinking biger, a way to port any puzzle game to blockchain, and even a web3 captcha to protect against the dark side of AI - robots.
 
-A [demo is hosted here](https://cheerful-cheesecake-30269e.netlify.app/) 
-It needs my computer running the oracle,,
-Here is a YouTube demo.
+# Demo
+
+A [demo is hosted here](https://cheerful-cheesecake-30269e.netlify.app/). It needs my computer running the oracle. So, here is a [YouTube demo variant](https://youtu.be/PdydslqjhMo), just in case.
 
 # So how does verified match help games?
 
