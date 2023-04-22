@@ -10,9 +10,16 @@ A [demo is hosted here](https://cheerful-cheesecake-30269e.netlify.app/)
 It needs my computer running the oracle,,
 Here is a YouTube demo.
 
+# So how does verified match help games?
+
+There are games to tell stories. There are games to solve mysteries. But actually, games are just tasks that require one to act in a specific way - to answer some question. 
+
+If there is only one way to solve a level - only one answer - then zkMatch works. 
+Any such game old or new can, actually, be run on-chain. Which brings a host of possibilities like - guaranteed rewards, abolished cheating. It can be placing mirrors to guide the laser through the labirynth. It can be finding one concept which unites four pictures. It can be guessing which brand is on the logo. This a general solution to rule them all.
+
 # The algorithm shortly
 
-A point on an elliptic curve denotes the right answer. If a human and captcha server, using groth16, prove
+A point on an elliptic curve denotes the right answer. Here I implemented simple [try-and-increment encoding](https://github.com/arty-arty/zkMatch/blob/master/boneh-encode/hash_to_curve.js). If a human and captcha server, using groth16, prove
 that they did a Diffie-Hellman key exchange, and they arrived at the same point, then the answer is right. 
 
 Those two circuits: the first one for initial commitment to the key, and the second for proven multiplication are
