@@ -12,13 +12,21 @@ The rest is unchanged.
 
 ## A synopsis
 
-
 Here is a short synopsis of the algorithm just to remind:
 If the 
 We encode 
 We do a Diffie-Hellman key exchange.
 
 ## 2 Major Applications
+CAPTCHA. Imagine a dApp. Most likely you interact with NFTs or tokens. In web3 projects, the majority of non-developers are attracted by this. Imagine an NFT mint. Unfortunately, real people often have almost zero chance to win. 
+
+The more popular the project the more bots. A horde of bots. They steals all available places, long before user has time to click. It [happens a lot](https://cryptoslate.com/the-saudis-hits-number-1-on-opensea-as-bots-claim-free-mint-scammers-attack-discord/). 
+Sometimes botters make mistakes and it becomes apparent.
+
+
+With zkMatch either a regular CAPTCHA answer is encoded or a word puzzle. Each user has to match the answer to mint a token. Bruteforcing becomes costly and infeasible.
+
+GAMES. 
 
 ## Security consideration 1
 
@@ -39,7 +47,7 @@ And the protocol safe from this kind of attacks.
 
 Even if the encoded answer points are random. An ability to solve Decisional-Diffie Hellman problem would break the protocol.
 Let's say there is a an efficiently computable billinear mapping from this group $G_1$ to some other $G_T$ called $e: G_1 \rightarrow G_T$.
-Bruteforce possilbe $G'$ from a small set until $e(kG, aG) = e(G', kaG)$. To protect, I chose a Baby Jubjub group with a high embedding degree, where it is ahrd
+Bruteforce possilbe $G'$ from a small set until $e(kG, aG) = e(G', kaG)$. To protect, I chose a Baby Jubjub group with a high embedding degree, where pairings are computationally inefficient.
 
 When the adversary sees more tries. Breaking the system this way tranforms into finding multi-linear pairings. And there are [some additional reasons](https://crypto.stanford.edu/~dabo/papers/mlinear.pdf) why it seems difficult.  
 
@@ -49,10 +57,8 @@ Yeseterday, -->
 
 ## Mini-conclusion 
 
-It simple and explainable. Any developer knows Diffie-Hellman key exchange.
-
-Hopefully, this year will.
-Stop bots forever. And have bot free summer...
+The alogtihm is simple and explainable. Any developer knows Diffie-Hellman key exchange.
+Hopefully, this year we will. A summer free of bots. Forever 🌞.
 
 # End of updated section
 
@@ -65,7 +71,7 @@ Any such game old or new can, actually, be run on-chain. Which brings a host of 
 
 # Demo
 is an application of this principle. Here it is an NFT minting game. With a difficult puzzle only human can solve to protect against bots. See the [demo source code](https://github.com/arty-arty/zkMatch/blob/ed4e3aae599be228f97c38fc7d95cc75f4114a47/my-mint/src/App.jsx#L219).
-In web3 projects, the majority of non-developer users are attracted by interacting with tokens or NFTs. Unfortunately, real people often have almost zero chance to win. The more popular the project the more bots. The bots horde, steals all available places, long before user has time to click.
+In web3 projects, the majority of non-developer users are attracted by interacting with tokens or NFTs. Unfortunately, real people often have almost zero chance to win. The more popular the project the more bots. The bots horde, steals all available places, long before the user has time to click.
 
 We solve this problem once and for all with a simple to implement zk scheme.
 A [demo is hosted here](https://cheerful-cheesecake-30269e.netlify.app/). It needs my computer running the oracle. So, there is a [YouTube demo variant](https://youtu.be/PdydslqjhMo), just in case.
