@@ -1,10 +1,56 @@
 # 👥zkMatch 
 is a two-party system to prove encrypted information match. It is a building block for verified gaming.
 
-Two millionaires want to see if they have equal wealth without disclosing how rich they are. This is Social-Millionaire problem.
+Two millionaires want to see if they have equal wealth without disclosing how rich they are. This is Socialist-Millionaire problem.
 Here is my solution using NIZK proofs and eliptic curves. I implement it inside of a smart contract.
 
-Surprisingly, once on a blockchain, this has a multidue applications: homework assignment verification, thinking biger, a way to port any puzzle game to blockchain, and even a web3 captcha to protect against the dark side of AI - 🦾.
+Surprisingly, once on a blockchain, this has a multidue applications: homework assignment verification, thinking biger, a way to port any puzzle game to blockchain, and even a web3 CAPTCHA to protect against the dark side of AI - 🦾.
+
+# Updated section
+The part before the end of updated section is new to save reading time.
+The rest is unchanged.
+
+Here is a short synopsis of the algorithm just to remind:
+If the 
+We encode 
+We do a Diffie-Hellman key exchange.
+
+## 
+
+## Security consideration 1
+
+<!-- This is not a complete and rigorous proof, yet. Though it was my rationale when I came up with this simple system.
+
+I know this might be obvious. I wanted to write it up, -->
+
+Let's say $k$ is oracle's key, $a$ is player's key, $G$ is the right answer. $G'$ some answer by the player.
+After one interaction the player knows $M = kG$ and $M' = kG'$. Remember that the possible answer set is small. It's just a CAPTCHA - not so many combinations. Or even a multiple choice question with three choices.
+
+What if we additionaly know that $G = xG'$ for some $x$ from a small known set. Then bruteforce $x$ until $xM' = M$. Then the malicious player would know the true answer  $G = xG'$.
+<!-- So, to protect, we must not allow correlation between different encoded answers happen.  -->
+
+That's where try-and-increment hashing saves the day. In random oracle model, $G$ and $G'$ will not be correlated in any way.
+And the protocol safe from this kind of attacks. 
+
+## Security consideration 2
+
+Even if the encoded answer points are random. An ability to solve Decisional-Diffie Hellman problem would break the protocol.
+Let's say there is a an efficiently computable billinear mapping from this group $G_1$ to some other $G_T$ called $e: G_1 \rightarrow G_T$.
+Bruteforce possilbe $G'$ from a small set until $e(kG, aG) = e(G', kaG)$. To protect, I chose a Baby Jubjub group with a high embedding degree, where it is ahrd
+
+When the adversary sees more tries. Breaking the system this way tranforms into finding multi-linear pairings. And there are [some additional reasons](https://crypto.stanford.edu/~dabo/papers/mlinear.pdf) why it seems difficult.  
+
+## How does it help NFTs
+Yeseterday,
+
+## 
+
+It simple and explainable. Any developer knows Diffie-Hellman key exchange.
+
+Hopefully, this year will.
+Stop bots forever. And have bot free summer...
+
+# End of updated section
 
 # So, how does verified match help games?
 
@@ -15,7 +61,9 @@ Any such game old or new can, actually, be run on-chain. Which brings a host of 
 
 # Demo
 is an application of this principle. Here it is an NFT minting game. With a difficult puzzle only human can solve to protect against bots. See the [demo source code](https://github.com/arty-arty/zkMatch/blob/ed4e3aae599be228f97c38fc7d95cc75f4114a47/my-mint/src/App.jsx#L219).
+In web3 projects, the majority of non-developer users are attracted by interacting with tokens or NFTs. Unfortunately, real people often have almost zero chance to win. The more popular the project the more bots. The bots horde, steals all available places, long before user has time to click.
 
+We solve this problem once and for all with a simple to implement zk scheme.
 A [demo is hosted here](https://cheerful-cheesecake-30269e.netlify.app/). It needs my computer running the oracle. So, there is a [YouTube demo variant](https://youtu.be/PdydslqjhMo), just in case.
 
 # The algorithm shortly
