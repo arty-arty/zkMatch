@@ -10,12 +10,15 @@ Surprisingly, once on a blockchain, this has a multidue applications: homework a
 The part before the end of updated section is new to save reading time.
 The rest is unchanged.
 
+## A synopsis
+
+
 Here is a short synopsis of the algorithm just to remind:
 If the 
 We encode 
 We do a Diffie-Hellman key exchange.
 
-## 
+## 2 Major Applications
 
 ## Security consideration 1
 
@@ -40,10 +43,11 @@ Bruteforce possilbe $G'$ from a small set until $e(kG, aG) = e(G', kaG)$. To pro
 
 When the adversary sees more tries. Breaking the system this way tranforms into finding multi-linear pairings. And there are [some additional reasons](https://crypto.stanford.edu/~dabo/papers/mlinear.pdf) why it seems difficult.  
 
+<!-- 
 ## How does it help NFTs
-Yeseterday,
+Yeseterday, -->
 
-## 
+## Mini-conclusion 
 
 It simple and explainable. Any developer knows Diffie-Hellman key exchange.
 
