@@ -15,6 +15,7 @@ module dev::verifier {
     use sui::sui::{SUI};
     use sui::event;
     use sui::dynamic_object_field as ofield;
+    use sui::clock::{Self, Clock};
 
     // The creator bundle: these two packages often go together.
     use sui::package;
@@ -35,7 +36,7 @@ module dev::verifier {
         student_a_hash: vector<u8>, 
         student_aH_x: vector<u8>,   
         student_aH_y: vector<u8>,   
-        timestamp_answered: vector<u8>, //Deal with it later
+        timestamp_answered: u64, //Deal with it later
         student_address: address,
         akP_x: vector<u8>,          
         akP_y: vector<u8>,
@@ -99,7 +100,7 @@ module dev::verifier {
     const MIST_PER_SUI: u64 = 1_000_000_000;
 
     struct StudentAnsweredEvent has copy, drop {
-        timestamp_answered: vector<u8>, //Deal with it later
+        timestamp_answered: u64, //Deal with it later
         student_address: address,
         akP_x: vector<u8>,          
         akP_y: vector<u8>,
@@ -109,7 +110,7 @@ module dev::verifier {
 
     public entry fun student_answer_question(shared_quest: &mut Quest, c: coin::Coin<SUI>, proof_commit: vector<u8>,
      student_a_hash: vector<u8>, student_aH_x: vector<u8>, student_aH_y: vector<u8>, 
-     proof_unlock: vector<u8>, akP_x: vector<u8>, akP_y: vector<u8>, ctx: &TxContext)
+     proof_unlock: vector<u8>, akP_x: vector<u8>, akP_y: vector<u8>, clock: &Clock, ctx: &TxContext)
     {
         let student_address = tx_context::sender(ctx);
         let Quest {id: _, question: _, professor_address, professor_k_hash: _,
@@ -120,6 +121,7 @@ module dev::verifier {
         //Take 1 SUI for the mint anyway
         //Send it to professor address, retrieved for Quest object
         //!!!Enable mimimal collateral during production!!!
+        //Just remove "/ 10_000_000" to do it
         
         assert!(coin::value(&c) > MIST_PER_SUI / 10_000_000, EInsufficientCollateral);
         transfer::public_transfer(c, *professor_address);
@@ -146,7 +148,7 @@ module dev::verifier {
         assert!(is_valid_multiplication, EStudentBadMultiplication);
 
         //TODO: Add timestamp here later
-        let timestamp_answered: vector<u8> = vector::empty();
+        let timestamp_answered: u64 = clock::timestamp_ms(clock);
         
         //Write this commitment to answer
         //Write this multiplication result to answer
@@ -233,21 +235,39 @@ module dev::verifier {
         table::remove(answers, student);       
     }
 
-    public entry fun student_get_timeout_reward(_shared_quest: &Quest, _ctx: &TxContext)
+    //This is a very important function. If the professor does not respond, mint NFT, even if the answer was wrong.
+    public entry fun student_get_timeout_reward(shared_quest: &mut Quest, clock: &Clock, ctx: &mut TxContext)
     {
+        //Read current timestamp
+        let timestamp_current: u64 = clock::timestamp_ms(clock);
+
+        //Get answers field for this quest
+        let answers = ofield::borrow_mut<vector<u8>, Table<address, Answer>>(&mut shared_quest.id, b"answers");
+
+        //Assert that this student answered indeed
+        let student_address = tx_context::sender(ctx);
+        assert!(table::contains(answers, student_address), EStudentNoAnswer);
+        
         //Lookup by caller address answer in shared_quest
-        //Make sure there is one
+        let answer = table::borrow_mut(answers, student_address);
 
-        //Retrieve its timestamp: Do later when everything else is done
-        //Use clock to get current: Do later when everything else is done
-        //If professor (oracle) did not check the answer in 2 minutes
+        //Retrieve its timestamp
+        let timestamp_answered = answer.timestamp_answered;
 
+        //If professor (oracle) did not check the answer in 2 minutes,
         //Pop answer 
         //Reward the caller with NFT
-
-        //Do it last
-        //But first just implement free mint here for any answer and Popping of answer
-        //Improve it by allowing it only after timestamp + 2 minutes
+        if (timestamp_current - timestamp_answered > 0)
+        {
+            table::remove(answers, student_address);
+            let nft = ProfessorNFT {
+                id: object::new(ctx),
+                name : string::utf8(b"Serenia"),
+                description: string::utf8(b"From Soulmates collection. There is the whole world. Yet, just you two feel the life same. "),
+                url: url::new_unsafe_from_bytes(b"https://ipfs.io/ipfs/bafybeifpvivgf4iuvwjv6r3z3ocuwrq3rpvb27xq32rnz6wepqgikd4x2m"),
+            };
+            transfer::transfer(nft, student_address);
+        }
     }
 
     fun verify(proof: vector<u8>, 

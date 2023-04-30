@@ -304,6 +304,7 @@ async function answer_quest(snarkjs, addr, quest_id, student_answer) {
       tx.pure(proof_unlock_serialized),
       tx.pure(akP_x),
       tx.pure(akP_y),
+      tx.pure("0x0000000000000000000000000000000000000000000000000000000000000006")
     ],
     gasBudget: 10000
   }
