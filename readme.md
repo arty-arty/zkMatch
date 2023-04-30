@@ -7,9 +7,7 @@ Here is my solution using NIZK proofs and eliptic curves. I implement it inside 
 Surprisingly, once on a blockchain, this has a multidue applications: homework assignment verification, thinking biger, a way to port any puzzle game to blockchain, and even a web3 CAPTCHA to protect against the dark side of AI - 🦾.
 
 # Updated section
-The part before the end of updated section is new to save reading time.
-
-The rest of the write-up is unchanged. [Crucial code changes](https://github.com/arty-arty/zkMatch/blob/7e3a530fd4b70a5b996c7cdb9a113e6d75e69a4b/sui-verifier/sources/dev_verifier.move#L239) to make production-ready added.
+[Crucial code changes](https://github.com/arty-arty/zkMatch/blob/7e3a530fd4b70a5b996c7cdb9a113e6d75e69a4b/sui-verifier/sources/dev_verifier.move#L239) to make production-ready added. The part before the end of updated section is new to save reading time. The rest of the write-up is unchanged.
 
 ## A synopsis
 
