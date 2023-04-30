@@ -12,7 +12,7 @@ The rest is unchanged.
 
 ## A synopsis
 
-Here is a short synopsis of the algorithm just to remind:
+Here is a short synopsis of the algorithm, just to remind:
 
 For gaming or CAPTCHA - secrets (answers) are small. E.g. English language words are just 10-bits average. Hash would be instantly bruteforced with a table lookup.
 That's why we need the second party to hide the secret. And a smart contract mediator to zk prove match (answer verification) queries done correctly.
@@ -20,8 +20,9 @@ That's why we need the second party to hide the secret. And a smart contract med
 I suggest to hash answers to an elliptic curve. And do Diffie-Hellman.
 
 Let $G'$ anf $G$ be oracle and user answers. Let, $k$, $a$ be their random keys.
-Then after we do a correct Diffie-Hellman proven by circom circuit. We get final points
+Then after we do a correct Diffie-Hellman proven by a circom circuit. We get final points
 $kaG$ and $akG'$. If points match then contract unlocks reward. 
+
 <!-- 
 We hash oracle true answer and person answer to curve points $G'$ and $G$ respectively. We do a Diffie-Hellman key exchange. -->
 
