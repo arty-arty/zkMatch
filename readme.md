@@ -41,7 +41,7 @@ CAPTCHA. Imagine a dApp. Most likely you interact with NFTs or tokens. In web3 p
 The more popular the project the more bots. A horde of bots. They steals all available places, long before user has time to click. It [happens a lot](https://cryptoslate.com/the-saudis-hits-number-1-on-opensea-as-bots-claim-free-mint-scammers-attack-discord/). 
 Sometimes botters make mistakes and it becomes apparent. Top of the iceberg.
 
-With zkMatch either a regular CAPTCHA answer is encoded or a word puzzle. Each user has to match the answer to mint a token. No one, without passing a CAPTCHA, can trigger the smart contract. Bruteforcing becomes costly and infeasible.
+With zkMatch either a regular CAPTCHA answer is encoded or a word puzzle. Each user has to match the answer to mint a token. No one, without passing a CAPTCHA, can trigger the smart contract. Each failed try is paid. Bruteforcing becomes costly and infeasible.
 
 ## Security consideration 1
 
