@@ -8,7 +8,8 @@ Surprisingly, once on a blockchain, this has a multidue applications: homework a
 
 # Updated section
 The part before the end of updated section is new to save reading time.
-The rest is unchanged.
+
+The rest of the write-up is unchanged. [Crucial code changes](https://github.com/arty-arty/zkMatch/blob/7e3a530fd4b70a5b996c7cdb9a113e6d75e69a4b/sui-verifier/sources/dev_verifier.move#L239) to make production-ready added.
 
 ## A synopsis
 
