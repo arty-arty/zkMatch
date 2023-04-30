@@ -14,12 +14,25 @@ The rest is unchanged.
 
 Here is a short synopsis of the algorithm just to remind:
 
+For gaming or CAPTCHA - secrets (answers) are small. E.g. English language words are just 10-bits average. Hash would be instantly bruteforced with a table lookup.
+That's why we need the second party to hide the secret. And a smart contract mediator to zk prove match (answer verification) queries done correctly.
+
+I suggest to hash answers to an elliptic curve. And do Diffie-Hellman.
+
+Let $G'$ anf $G$ be oracle and user answers. Let, $k$, $a$ be their random keys.
+Then after we do a correct Diffie-Hellman proven by circom circuit. We get final points
+$kaG$ and $akG'$. If points match then contract unlocks reward. 
+<!-- 
+We hash oracle true answer and person answer to curve points $G'$ and $G$ respectively. We do a Diffie-Hellman key exchange. -->
+
+<!-- In case of 
+The secret 
+I want to prove that I know a secret.
+
 To interact with humans, we the inforamtion belongs to a small set of choices. Instead of 256-bit password.
-But it's not . That's why we need the second party to hide the secret. We
+But it's not .  We -->
 
 
-We encode 
-We do a Diffie-Hellman key exchange.
 
 ## A Major Application
 CAPTCHA. Imagine a dApp. Most likely you interact with NFTs or tokens. In web3 projects, the majority of non-developers are attracted by this. Imagine an NFT mint. Unfortunately, real people often have almost zero chance to win. 
