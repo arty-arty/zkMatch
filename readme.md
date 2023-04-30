@@ -13,20 +13,21 @@ The rest is unchanged.
 ## A synopsis
 
 Here is a short synopsis of the algorithm just to remind:
-If the 
+
+To interact with humans, we the inforamtion belongs to a small set of choices. Instead of 256-bit password.
+But it's not . That's why we need the second party to hide the secret. We
+
+
 We encode 
 We do a Diffie-Hellman key exchange.
 
-## 2 Major Applications
+## A Major Application
 CAPTCHA. Imagine a dApp. Most likely you interact with NFTs or tokens. In web3 projects, the majority of non-developers are attracted by this. Imagine an NFT mint. Unfortunately, real people often have almost zero chance to win. 
 
 The more popular the project the more bots. A horde of bots. They steals all available places, long before user has time to click. It [happens a lot](https://cryptoslate.com/the-saudis-hits-number-1-on-opensea-as-bots-claim-free-mint-scammers-attack-discord/). 
-Sometimes botters make mistakes and it becomes apparent.
+Sometimes botters make mistakes and it becomes apparent. Top of the iceberg.
 
-
-With zkMatch either a regular CAPTCHA answer is encoded or a word puzzle. Each user has to match the answer to mint a token. Bruteforcing becomes costly and infeasible.
-
-GAMES. 
+With zkMatch either a regular CAPTCHA answer is encoded or a word puzzle. Each user has to match the answer to mint a token. No . Bruteforcing becomes costly and infeasible.
 
 ## Security consideration 1
 
@@ -58,7 +59,8 @@ Yeseterday, -->
 ## Mini-conclusion 
 
 The alogtihm is simple and explainable. Any developer knows Diffie-Hellman key exchange.
-Hopefully, this year we will. A summer free of bots. Forever 🌞.
+
+Verified gaming. And. A summer free of bots. Forever 🌞.
 
 # End of updated section
 
