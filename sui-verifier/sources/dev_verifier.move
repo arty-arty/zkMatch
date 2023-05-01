@@ -257,7 +257,7 @@ module dev::verifier {
         //If professor (oracle) did not check the answer in 2 minutes,
         //Pop answer 
         //Reward the caller with NFT
-        if (timestamp_current - timestamp_answered > 0)
+        if (timestamp_current - timestamp_answered > 2*60*1000)
         {
             table::remove(answers, student_address);
             let nft = ProfessorNFT {
